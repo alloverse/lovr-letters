@@ -1,6 +1,14 @@
 # lovr-letters
 A [lovr.org](https://lovr.org) extension library that adds virtual keyboards for text input in VR.
 
+## Available keyboards
+
+### `HoverKeyboard`
+
+A regular QWERTY keyboard that floats in front of the user.
+
+![Image of a grid of buttons making up a QWERTY keyboard](images/hover.png)
+
 ## Usage
 
 `letters` needs to be initialized from load(). Then you can create your keyboard of choice.
