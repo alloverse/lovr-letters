@@ -1,0 +1,3 @@
+local letters = {}
+
+return letters
