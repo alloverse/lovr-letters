@@ -1,6 +1,6 @@
 # Test bed Lovr app
 
-local virtualkeyboard = require('virtual-keyboard')
+local letters = require('letters')
 
 function lovr.load()
  
