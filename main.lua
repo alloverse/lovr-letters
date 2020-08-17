@@ -19,20 +19,20 @@ end
 
 -- global
 function lovr.load()
-  world = lovr.physics.newWorld()
-
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
   lovr.headset.setClipDistance(0.1, 3000)
   
   lovr.handlers["keypressed"] = typehandler
   table.insert(drawables, Button:new{
+    world=letters.world,
     position = lovr.math.newVec3(-0.3, 1.2, -1),
     onPressed = function() 
-      table.insert(drawables, letters.HoverKeyboard:new())
+      table.insert(drawables, letters.HoverKeyboard:new{world=letters.world})
     end,
     label = "Hover"
   })
   table.insert(drawables, Button:new{
+    world=letters.world,
     position = lovr.math.newVec3(0.3, 1.2, -1),
     onPressed = function() 
       table.insert(drawables, letters.ButterflyKeyboard:new())

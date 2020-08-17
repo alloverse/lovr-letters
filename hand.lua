@@ -26,7 +26,7 @@ function Hand:update()
   self.to = distantPoint
 
   local highlightedItem = nil
-  world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape)
+  self.world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape)
     highlightedItem = shape:getCollider():getUserData()
   end)
   if self.highlightedItem ~= highlightedItem then 

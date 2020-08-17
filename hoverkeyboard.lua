@@ -18,6 +18,7 @@ function HoverKeyboard:_createButtons()
   for j, row in ipairs(rows) do
     for i, l in ipairs(row) do
       table.insert(self.buttons, Button:new{
+        world = self.world,
         position = lovr.math.newVec3(-1.0 + i * 0.2, 1.8 - j*0.2, -2.0),
         size = lovr.math.newVec3(0.2, 0.2, 0.1),
         onPressed = function() 
@@ -28,6 +29,9 @@ function HoverKeyboard:_createButtons()
       })
     end
   end
+end
+function HoverKeyboard:update()
+
 end
 function HoverKeyboard:draw()
   for i, b in ipairs(self.buttons) do
