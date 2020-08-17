@@ -1,5 +1,6 @@
 -- Test bed Lovr app
 local letters = require('letters')
+local Button = require('button')
 
 -- state
 local current_text = ""
@@ -15,50 +16,6 @@ function typehandler(code, scancode, repetition)
     current_text = current_text .. code
   end
 end
-
--- buttons to do things
-local Button = {
-  position = lovr.math.newVec3(0,0,0),
-  size = lovr.math.newVec3(0.2, 0.2, 0.1),
-  onPressed = function() end,
-  label = "Untitled",
-  fraction = 0.0
-}
--- todo: reuse this button for the HoverKeyboard
-function Button:new(o)
-    o = o or {}
-    setmetatable(o, self)
-    self.__index = self
-    o.collider = world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.size.x, o.size.y, o.size.z)
-    o.collider:setUserData(o)
-    return o
-end
-function Button:draw()
-  lovr.graphics.setColor(0.3, 0.3, 0.4)
-  lovr.graphics.box('fill', self.position, self.size)
-  lovr.graphics.print(self.label, self.position + lovr.math.vec3(0,0.2,0), 0.07)
-  lovr.graphics.setColor(0.5, 0.5, self.highlighted and 0.7 or 0.6)
-  lovr.graphics.box('fill', self.position + lovr.math.vec3(0,0,(1.0-self.fraction) * 0.1 + 0.01), self.size - lovr.math.vec3(0.05,0.05,0))
-end
-function Button:highlight()
-  self.highlighted = true
-end
-function Button:dehighlight()
-  self.highlighted = false
-end
-function Button:select()
-  self.selected = true
-  self.fraction = 1.0
-end
-function Button:deselect()
-  self.selected = false
-  self.fraction = 0.0
-end
-function Button:actuate()
-  self.onPressed()
-end
-
-
 
 
 --- hands
@@ -129,14 +86,14 @@ function lovr.load()
     onPressed = function() 
       table.insert(drawables, letters.HoverKeyboard:new())
     end,
-    label = "Hover keyboard"
+    label = "Hover"
   })
   table.insert(drawables, Button:new{
     position = lovr.math.newVec3(0.3, 1.2, -1),
     onPressed = function() 
       table.insert(drawables, letters.ButterflyKeyboard:new())
     end,
-    label = "Butterfly keyboard"
+    label = "Butterfly"
   })
 
   for i, device in ipairs(lovr.headset.getHands()) do
