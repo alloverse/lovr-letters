@@ -58,7 +58,7 @@ function lovr.draw()
 
   lovr.graphics.setShader()
   lovr.graphics.setColor(0, 0, 0)
-  lovr.graphics.print(current_text, 0, 0, -10, 1)
+  lovr.graphics.print(current_text, 0, 5, -10, 1)
   lovr.graphics.setShader()
 
   for i, thing in ipairs(drawables) do
