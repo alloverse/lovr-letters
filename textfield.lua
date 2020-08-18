@@ -3,6 +3,7 @@ local TextField = {
   placeholder = "",
   position = lovr.math.newVec3(0, 0, 0),
   width = 6,
+  pixelDensity = 64,
   font = lovr.graphics.getFont(),
   isKey = false,
   caps = false,
@@ -15,6 +16,7 @@ function TextField:new(o)
   setmetatable(o, self)
   self.__index = self
   -- TODO: Update collider to match size when text changes
+  o.font:setPixelDensity(o.pixelDensity)
   o.collider = TextField.letters.world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.width, o.font:getHeight(), 0.1)
   o.collider:setUserData(o)
   return o
@@ -24,7 +26,7 @@ function TextField:remove()
 end
 function TextField:draw()
   -- todo: figure out why this doesn't stick
-  self.font:setPixelDensity(64)
+  self.font:setPixelDensity(self.pixelDensity)
 
   local totalWidth, lines = self.font:getWidth(self.text, wrap)
   local lastLine = string.match(self.text, "[^%c]*$")
@@ -35,8 +37,8 @@ function TextField:draw()
   lovr.graphics.setColor(1, 1, 1, self.isKey and 1.0 or (self.isHighlighted and 0.9 or 0.7))
   lovr.graphics.plane(
     'fill',
-    self.position.x + self.width/2, self.position.y - (height*lines)/2, self.position.z - 0.01,
-    self.width, height * lines
+    self.position.x + self.width/2 - 0.01, self.position.y - (height*lines)/2 - 0.01, self.position.z - 0.01,
+    self.width + 0.02, height * lines + 0.02
   )
 
   if self.text == "" then
