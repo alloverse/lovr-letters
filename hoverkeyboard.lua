@@ -17,20 +17,21 @@ function HoverKeyboard:_createButtons()
     {'lshift', 'space', 'backspace', 'return'}
   }
   for rowIndex, row in ipairs(rows) do
-    for lineIndex, line in ipairs(row) do
+    for keyIndex, key in ipairs(row) do
       local size = lovr.math.newVec3((rowIndex == 4) and 0.4 or 0.2, 0.2, 0.1)
       table.insert(self.buttons, Button:new{
         world = self.world,
         size = size,
-        position = lovr.math.newVec3(-1.0 + lineIndex * size.x, 2.0 - rowIndex*size.y, -2.0),
+        position = lovr.math.newVec3(-1.0 + keyIndex * size.x, 2.0 - rowIndex*size.y, -2.0),
         
         onPressed = function() 
-          lovr.event.push("keypressed", line, -1, false)
+          lovr.event.push("keypressed", key, -1, false)
         end,
         onReleased = function() 
-          lovr.event.push("keyreleased", line, -1)
+          lovr.event.push("keyreleased", key, -1)
         end,
-        label = line
+        label = key,
+        isToggle = key == "lshift"
       })
     end
   end

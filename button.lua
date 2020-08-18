@@ -5,7 +5,8 @@ local Button = {
   onReleased = function() end, -- button is lifted
   onActuate = function() end, -- button is lifted with cursor still inside
   label = "Untitled",
-  fraction = 0.0
+  fraction = 0.0,
+  isToggle = false
 }
 
 -- todo: reuse this button for the HoverKeyboard
@@ -37,14 +38,25 @@ function Button:dehighlight()
   self.highlighted = false
 end
 function Button:select()
-  self.selected = true
-  self.fraction = 1.0
-  self.onPressed()
+  if self.isToggle == false then
+    self.selected = true
+    self.fraction = 1.0
+    self.onPressed()
+  end
 end
 function Button:deselect()
-  self.selected = false
-  self.fraction = 0.0
-  self.onReleased()
+  if self.isToggle == false then
+    self.selected = false
+    self.onReleased()
+  else
+    self.selected = not self.selected
+    if self.selected then
+      self.onPressed()
+    else
+      self.onReleased()
+    end
+  end
+  self.fraction = self.selected and 1.0 or 0.0
 end
 function Button:actuate()
   self.onActuate()
