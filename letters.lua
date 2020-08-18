@@ -51,6 +51,9 @@ function letters.displayKeyboard()
 end
 
 function letters.hideKeyboard()
+  if letters.currentKeyboard then
+    letters.currentKeyboard:remove()
+  end
   letters.currentKeyboard = nil
 end
 

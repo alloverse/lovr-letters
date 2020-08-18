@@ -19,7 +19,9 @@ function TextField:new(o)
   o.collider:setUserData(o)
   return o
 end
-
+function TextField:remove()
+  self.collider:destroy()
+end
 function TextField:draw()
   -- todo: figure out why this doesn't stick
   self.font:setPixelDensity(64)

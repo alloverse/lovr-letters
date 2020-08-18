@@ -6,6 +6,11 @@ function HoverKeyboard:new(o)
   o:_createButtons()
   return o
 end
+function HoverKeyboard:remove()
+  for i, b in ipairs(self.buttons) do
+    b:remove()
+  end
+end
 function HoverKeyboard:_createButtons()
   self.buttons = {}
   local rows = {
