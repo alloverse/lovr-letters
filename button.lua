@@ -58,6 +58,10 @@ function Button:deselect()
   end
   self.fraction = self.selected and 1.0 or 0.0
 end
+function Button:setSelected(newValue)
+  self.selected = newValue
+  self.fraction = self.selected and 1.0 or 0.0
+end
 function Button:actuate()
   self.onActuate(self)
 end

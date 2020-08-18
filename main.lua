@@ -16,23 +16,28 @@ function lovr.load()
 
   table.insert(drawables, letters.Button:new{
     position = lovr.math.newVec3(-0.3, 1.2, -1),
-    onActuate = function() 
+    onPressed = function() 
       letters.defaultKeyboard = letters.HoverKeyboard
+      drawables[2]:setSelected(false)
     end,
-    label = "Hover"
+    label = "Hover",
+    isToggle = true
   })
   table.insert(drawables, letters.Button:new{
     position = lovr.math.newVec3(0.3, 1.2, -1),
-    onActuate = function() 
-      etters.defaultKeyboard = letters.ButterflyKeyboard
+    onPressed = function() 
+      letters.defaultKeyboard = letters.ButterflyKeyboard
+      drawables[1]:setSelected(false)
     end,
-    label = "Butterfly"
+    label = "Butterfly",
+    isToggle = true
   })
   font = lovr.graphics.newFont(24)
   table.insert(drawables, letters.TextField:new{
     position = lovr.math.newVec3(-3, 5, -7),
     font = font
   })
+  drawables[1]:deselect()
 
   
   for i, hand in ipairs(letters.hands) do
