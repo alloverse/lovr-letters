@@ -104,6 +104,11 @@ function TextField:dehighlight()
 end
 
 function TextField:makeKey()
+  if TextField.letters.currentEditor then
+    TextField.letters.currentEditor:resignKey()
+  end
+  TextField.letters.currentEditor = self
+
   self.isKey = true
   self.oldPressedHandler = lovr.handlers["keypressed"]
   self.oldReleasedHandler = lovr.handlers["keyreleased"]
@@ -112,6 +117,7 @@ function TextField:makeKey()
   TextField.letters.displayKeyboard()
 end
 function TextField:resignKey()
+  TextField.letters.currentEditor = nil
   self.isKey = false
   lovr.handlers["keypressed"] = self.oldPressedHandler
   lovr.handlers["keyreleased"] = self.oldReleasedHandler

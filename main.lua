@@ -35,6 +35,11 @@ function lovr.load()
   font = lovr.graphics.newFont(24)
   table.insert(drawables, letters.TextField:new{
     position = lovr.math.newVec3(-3, 5, -7),
+    font = font,
+    onReturn = function() drawables[4]:makeKey(); return false; end
+  })
+  table.insert(drawables, letters.TextField:new{
+    position = lovr.math.newVec3(-3, 4.3, -7),
     font = font
   })
   drawables[1]:deselect()
