@@ -41,25 +41,25 @@ function Button:select()
   if self.isToggle == false then
     self.selected = true
     self.fraction = 1.0
-    self.onPressed()
+    self.onPressed(self)
   end
 end
 function Button:deselect()
   if self.isToggle == false then
     self.selected = false
-    self.onReleased()
+    self.onReleased(self)
   else
     self.selected = not self.selected
     if self.selected then
-      self.onPressed()
+      self.onPressed(self)
     else
-      self.onReleased()
+      self.onReleased(self)
     end
   end
   self.fraction = self.selected and 1.0 or 0.0
 end
 function Button:actuate()
-  self.onActuate()
+  self.onActuate(self)
 end
 
 return Button
