@@ -28,7 +28,7 @@ function lovr.load()
     label = "Butterfly"
   })
   table.insert(drawables, TextField:new{
-    position = lovr.math.newVec3(0, 5, -10),
+    position = lovr.math.newVec3(-5, 5, -10),
   })
   drawables[#drawables]:makeKey()
 
