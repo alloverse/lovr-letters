@@ -11,21 +11,26 @@ end
 function HoverKeyboard:_createButtons()
   self.buttons = {}
   local rows = {
-    {'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'},
-    {'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'},
-    {'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/'},
+    {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'},
+    {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'},
+    {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'},
+    {'lshift', 'space', 'backspace', 'return'}
   }
-  for j, row in ipairs(rows) do
-    for i, l in ipairs(row) do
+  for rowIndex, row in ipairs(rows) do
+    for lineIndex, line in ipairs(row) do
+      local size = lovr.math.newVec3((rowIndex == 4) and 0.4 or 0.2, 0.2, 0.1)
       table.insert(self.buttons, Button:new{
         world = self.world,
-        position = lovr.math.newVec3(-1.0 + i * 0.2, 1.8 - j*0.2, -2.0),
-        size = lovr.math.newVec3(0.2, 0.2, 0.1),
+        size = size,
+        position = lovr.math.newVec3(-1.0 + lineIndex * size.x, 2.0 - rowIndex*size.y, -2.0),
+        
         onPressed = function() 
-          lovr.event.push("keypressed", l, -1, false)
-          lovr.event.push("keyreleased", l, -1)
+          lovr.event.push("keypressed", line, -1, false)
         end,
-        label = l
+        onReleased = function() 
+          lovr.event.push("keyreleased", line, -1)
+        end,
+        label = line
       })
     end
   end

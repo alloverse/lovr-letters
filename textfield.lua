@@ -2,7 +2,8 @@ local TextField = {
   text = "",
   position = lovr.math.newVec3(0, 0, 0),
   font = lovr.graphics.getFont(),
-  isKey = false
+  isKey = false,
+  caps = false
 }
 
 function TextField:new(o)
@@ -47,20 +48,35 @@ function TextField:onKeyPressed(code, scancode, repeated)
     self.text = self.text .. " "
   elseif code == "return" then
     self.text = self.text .. "\n"
-  else
+  elseif code == "lshift" or code == "rshift" then
+    self.caps = true
+  elseif #code == 1 then
+    if self.caps then
+      code = string.upper(code)
+    end
     self.text = self.text .. code
+  end
+end
+
+function TextField:onKeyReleased(code, scancode)
+  if code == "lshift" or code == "rshift" then
+    self.caps = false
   end
 end
 
 function TextField:makeKey()
   self.isKey = true
-  self.oldHandler = lovr.handlers["keypressed"]
+  self.oldPressedHandler = lovr.handlers["keypressed"]
+  self.oldReleasedHandler = lovr.handlers["keyreleased"]
   lovr.handlers["keypressed"] = function(a, b, c) self:onKeyPressed(a,b,c) end
+  lovr.handlers["keyreleased"] = function(a, b) self:onKeyReleased(a,b) end
 end
 function TextField:resignKey()
   self.isKey = false
-  lovr.handlers["keypressed"] = self.oldHandler
-  self.oldHandler = nil
+  lovr.handlers["keypressed"] = self.oldPressedHandler
+  lovr.handlers["keyreleased"] = self.oldReleasedHandler
+  self.oldPressedHandler = nil
+  self.oldReleasedHandler = nil
 end
 
 return TextField

@@ -14,7 +14,7 @@ function lovr.load()
   table.insert(drawables, Button:new{
     world=letters.world,
     position = lovr.math.newVec3(-0.3, 1.2, -1),
-    onPressed = function() 
+    onActuate = function() 
       table.insert(drawables, letters.HoverKeyboard:new{world=letters.world})
     end,
     label = "Hover"
@@ -22,7 +22,7 @@ function lovr.load()
   table.insert(drawables, Button:new{
     world=letters.world,
     position = lovr.math.newVec3(0.3, 1.2, -1),
-    onPressed = function() 
+    onActuate = function() 
       table.insert(drawables, letters.ButterflyKeyboard:new())
     end,
     label = "Butterfly"

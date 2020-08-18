@@ -1,7 +1,9 @@
 local Button = {
   position = lovr.math.newVec3(0,0,0),
   size = lovr.math.newVec3(0.4, 0.2, 0.1),
-  onPressed = function() end,
+  onPressed = function() end, -- button is pressed
+  onReleased = function() end, -- button is lifted
+  onActuate = function() end, -- button is lifted with cursor still inside
   label = "Untitled",
   fraction = 0.0
 }
@@ -37,13 +39,15 @@ end
 function Button:select()
   self.selected = true
   self.fraction = 1.0
+  self.onPressed()
 end
 function Button:deselect()
   self.selected = false
   self.fraction = 0.0
+  self.onReleased()
 end
 function Button:actuate()
-  self.onPressed()
+  self.onActuate()
 end
 
 return Button
