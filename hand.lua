@@ -26,7 +26,7 @@ function Hand:update()
   self.to = distantPoint
 
   local highlightedItem = nil
-  self.world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape, hx, hy, hz)
+  Hand.letters.world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape, hx, hy, hz)
     highlightedItem = shape:getCollider():getUserData()
     self.to = lovr.math.newVec3(hx, hy, hz)
   end)

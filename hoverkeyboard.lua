@@ -1,5 +1,3 @@
-local Button = require('button')
-
 local HoverKeyboard = {}
 function HoverKeyboard:new(o)
   o = o or {}
@@ -19,8 +17,7 @@ function HoverKeyboard:_createButtons()
   for rowIndex, row in ipairs(rows) do
     for keyIndex, key in ipairs(row) do
       local size = lovr.math.newVec3((rowIndex == 4) and 0.4 or 0.2, 0.2, 0.1)
-      table.insert(self.buttons, Button:new{
-        world = self.world,
+      table.insert(self.buttons, HoverKeyboard.letters.Button:new{
         size = size,
         position = lovr.math.newVec3(-1.0 + keyIndex * size.x, 2.0 - rowIndex*size.y, -2.0),
         

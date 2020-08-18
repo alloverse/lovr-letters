@@ -1,7 +1,6 @@
 -- Test bed Lovr app
 local letters = require('letters')
-local Button = require('button')
-local TextField = require('textfield')
+
 
 -- state
 local drawables = {}
@@ -11,26 +10,23 @@ function lovr.load()
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
   lovr.headset.setClipDistance(0.1, 3000)
   
-  table.insert(drawables, Button:new{
-    world=letters.world,
+  table.insert(drawables, letters.Button:new{
     position = lovr.math.newVec3(-0.3, 1.2, -1),
     onActuate = function() 
-      table.insert(drawables, letters.HoverKeyboard:new{world=letters.world})
+      table.insert(drawables, letters.HoverKeyboard:new{})
     end,
     label = "Hover"
   })
-  table.insert(drawables, Button:new{
-    world=letters.world,
+  table.insert(drawables, letters.Button:new{
     position = lovr.math.newVec3(0.3, 1.2, -1),
     onActuate = function() 
       table.insert(drawables, letters.ButterflyKeyboard:new())
     end,
     label = "Butterfly"
   })
-  table.insert(drawables, TextField:new{
+  table.insert(drawables, letters.TextField:new{
     position = lovr.math.newVec3(-5, 5, -10),
   })
-  drawables[#drawables]:makeKey()
 
   letters.load()
   for i, hand in ipairs(letters.hands) do

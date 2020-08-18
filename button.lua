@@ -14,7 +14,7 @@ function Button:new(o)
   o = o or {}
   setmetatable(o, self)
   self.__index = self
-  o.collider = o.world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.size.x, o.size.y, o.size.z)
+  o.collider = Button.letters.world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.size.x, o.size.y, o.size.z)
   o.collider:setUserData(o)
   return o
 end
