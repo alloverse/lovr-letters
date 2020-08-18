@@ -12,6 +12,7 @@ function lovr.load()
 
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
   lovr.headset.setClipDistance(0.1, 3000)
+  letters.defaultKeyboard = letters.HoverKeyboard
   
   table.insert(drawables, letters.Button:new{
     position = lovr.math.newVec3(-0.3, 1.2, -1),
