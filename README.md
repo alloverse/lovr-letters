@@ -11,9 +11,31 @@ A regular QWERTY keyboard that floats in front of the user.
 
 ## Usage
 
-`letters` needs to be initialized from load(). Then you can create your keyboard of choice.
+`letters` needs to be initialized from load(). Then you can let `letters` show keyboards
+for you when needed, or manually create and display it/them when you want one.
 The `letters` module needs to be `update()`d each frame, and the keyboard(s) you are using
 needs to be `update()`d and `draw()`n as well.
+
+Use this to have `letters` automatically show a keyboard when a text field
+needs it:
+
+```
+local letters = require('letters')
+function lovr.load()
+  letters.load()
+  letters.defaultKeyboard = letters.HoverKeyboard
+end
+
+function lovr.update()
+  letters.update()
+end
+
+function lovr.draw()
+  letters.draw()
+end
+```
+
+Use this to manage your keyboard manually:
 
 ```
 local letters = require('letters')
