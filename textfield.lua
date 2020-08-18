@@ -1,5 +1,6 @@
 local TextField = {
   text = "",
+  placeholder = "",
   position = lovr.math.newVec3(0, 0, 0),
   width = 6,
   font = lovr.graphics.getFont(),
@@ -36,11 +37,16 @@ function TextField:draw()
     self.width, height * lines
   )
 
-  lovr.graphics.setColor(0, 0, 0)
+  if self.text == "" then
+    -- grayed out placeholder text
+    lovr.graphics.setColor(0.7, 0.7, 0.7)
+  else
+    lovr.graphics.setColor(0, 0, 0)
+  end
   lovr.graphics.setFont(self.font)
   local wrap = self.width
   lovr.graphics.print(
-    self.text, 
+    self.text ~= "" and self.text or self.placeholder, 
     self.position.x, self.position.y, self.position.z, 
     1, -- scale
     0, 0, 1, 0, -- rotation
@@ -52,8 +58,8 @@ function TextField:draw()
   lovr.graphics.setColor(0, 0, 0, math.sin(lovr.timer.getTime()*5)*0.5 + 0.6)
   if self.isKey then
     lovr.graphics.line(
-      self.position.x + lastLineWidth + 0.1, self.position.y - height*(lines-1), self.position.z,
-      self.position.x + lastLineWidth + 0.1, self.position.y - height*lines, self.position.z
+      self.position.x + lastLineWidth + 0.03, self.position.y - height*(lines-1), self.position.z,
+      self.position.x + lastLineWidth + 0.03, self.position.y - height*lines, self.position.z
     )
   end
 end
