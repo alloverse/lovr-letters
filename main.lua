@@ -1,28 +1,16 @@
 -- Test bed Lovr app
 local letters = require('letters')
 local Button = require('button')
+local TextField = require('textfield')
 
 -- state
-local current_text = ""
 local drawables = {}
-
----- drawing text
-function typehandler(code, scancode, repetition)
-  if code == "backspace" then
-    current_text = current_text:sub(1, -2)
-  elseif code == "space" then
-    current_text = current_text .. " "
-  else
-    current_text = current_text .. code
-  end
-end
 
 -- global
 function lovr.load()
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
   lovr.headset.setClipDistance(0.1, 3000)
   
-  lovr.handlers["keypressed"] = typehandler
   table.insert(drawables, Button:new{
     world=letters.world,
     position = lovr.math.newVec3(-0.3, 1.2, -1),
@@ -39,6 +27,10 @@ function lovr.load()
     end,
     label = "Butterfly"
   })
+  table.insert(drawables, TextField:new{
+    position = lovr.math.newVec3(0, 5, -10),
+  })
+  drawables[#drawables]:makeKey()
 
   letters.load()
   for i, hand in ipairs(letters.hands) do
@@ -48,17 +40,15 @@ end
 
 function lovr.update()
   letters.update()
+  for i, thing in ipairs(drawables) do
+    thing:update()
+  end
 end
 
 function lovr.draw()
   lovr.graphics.setCullingEnabled(true)
   lovr.graphics.setDepthTest('lequal', true)
-
   lovr.graphics.clear()
-
-  lovr.graphics.setShader()
-  lovr.graphics.setColor(0, 0, 0)
-  lovr.graphics.print(current_text, 0, 5, -10, 1)
   lovr.graphics.setShader()
 
   for i, thing in ipairs(drawables) do

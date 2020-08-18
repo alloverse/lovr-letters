@@ -26,6 +26,8 @@ function Button:draw()
   lovr.graphics.setColor(0.5, 0.5, self.highlighted and 0.7 or 0.6)
   lovr.graphics.box('fill', buttonPos, self.size - lovr.math.vec3(0.05,0.05,0))
 end
+function Button:update()
+end
 function Button:highlight()
   self.highlighted = true
 end
