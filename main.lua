@@ -60,7 +60,6 @@ function lovr.update()
 end
 
 function lovr.draw()
-  font:setPixelDensity(32)
   lovr.graphics.setCullingEnabled(true)
   lovr.graphics.setDepthTest('lequal', true)
   lovr.graphics.clear()

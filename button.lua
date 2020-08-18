@@ -23,7 +23,6 @@ function Button:remove()
   self.collider:destroy()
 end
 function Button:draw()
-  self.font:setPixelDensity(32)
   lovr.graphics.setFont(self.font)
   lovr.graphics.setColor(0.3, 0.3, 0.4)
   lovr.graphics.box('fill', self.position, self.size)

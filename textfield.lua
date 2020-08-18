@@ -3,7 +3,7 @@ local TextField = {
   placeholder = "",
   position = lovr.math.newVec3(0, 0, 0),
   width = 6,
-  pixelDensity = 64,
+  fontScale = 0.6,
   font = lovr.graphics.getFont(),
   isKey = false,
   caps = false,
@@ -16,8 +16,7 @@ function TextField:new(o)
   setmetatable(o, self)
   self.__index = self
   -- TODO: Update collider to match size when text changes
-  o.font:setPixelDensity(o.pixelDensity)
-  o.collider = TextField.letters.world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.width, o.font:getHeight(), 0.1)
+  o.collider = TextField.letters.world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.width, o.font:getHeight()*o.fontScale, 0.1)
   o.collider:setUserData(o)
   return o
 end
@@ -25,13 +24,12 @@ function TextField:remove()
   self.collider:destroy()
 end
 function TextField:draw()
-  -- todo: figure out why this doesn't stick
-  self.font:setPixelDensity(self.pixelDensity)
+  local totalWidth, lines = self.font:getWidth(self.text, self.width*self.fontScale)
+  totalWidth = totalWidth*self.fontScale
 
-  local totalWidth, lines = self.font:getWidth(self.text, wrap)
   local lastLine = string.match(self.text, "[^%c]*$")
-  local lastLineWidth = self.font:getWidth(lastLine)
-  local height = self.font:getHeight()
+  local lastLineWidth = self.font:getWidth(lastLine)*self.fontScale
+  local height = self.font:getHeight()*self.fontScale
 
   lovr.graphics.setShader()
   lovr.graphics.setColor(1, 1, 1, self.isKey and 1.0 or (self.isHighlighted and 0.9 or 0.7))
@@ -48,13 +46,12 @@ function TextField:draw()
     lovr.graphics.setColor(0, 0, 0)
   end
   lovr.graphics.setFont(self.font)
-  local wrap = self.width
   lovr.graphics.print(
     self.text ~= "" and self.text or self.placeholder, 
     self.position.x, self.position.y, self.position.z, 
-    1, -- scale
+    self.fontScale, -- scale
     0, 0, 1, 0, -- rotation
-    wrap,
+    self.width,
     'left',
     'top'
   )
