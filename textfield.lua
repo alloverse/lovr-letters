@@ -5,7 +5,8 @@ local TextField = {
   font = lovr.graphics.getFont(),
   isKey = false,
   caps = false,
-  isHighlighted = false
+  isHighlighted = false,
+  onReturn = function(field, text) return true end -- whether to insert the return or not 
 }
 
 function TextField:new(o)
@@ -65,7 +66,9 @@ function TextField:onKeyPressed(code, scancode, repeated)
   elseif code == "space" then
     self.text = self.text .. " "
   elseif code == "return" then
-    self.text = self.text .. "\n"
+    if self.onReturn(self, self.text) then
+      self.text = self.text .. "\n"
+    end
   elseif code == "lshift" or code == "rshift" then
     self.caps = true
   elseif code == "escape" then
