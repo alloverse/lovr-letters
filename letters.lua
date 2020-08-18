@@ -1,8 +1,10 @@
+local mod = (...):match("(.-)[^%.]+$") 
+
 local letters = {
-  HoverKeyboard = require('hoverkeyboard'),
-  Button = require('button'),
-  TextField = require('textfield'),
-  Hand = require("hand")
+  HoverKeyboard = require(mod .. 'hoverkeyboard'),
+  Button = require(mod .. 'button'),
+  TextField = require(mod .. 'textfield'),
+  Hand = require(mod .. "hand")
 }
 -- Tie the module's classes together
 for k, class in pairs(letters) do
