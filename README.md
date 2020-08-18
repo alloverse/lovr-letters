@@ -7,7 +7,7 @@ A [lovr.org](https://lovr.org) extension library that adds virtual keyboards for
 
 A regular QWERTY keyboard that floats in front of the user.
 
-![Image of a grid of buttons making up a QWERTY keyboard](images/hover.png)
+![Image of a grid of buttons making up a QWERTY keyboard](images/hover.gif)
 
 ## Usage
 
