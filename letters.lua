@@ -24,7 +24,7 @@ letters.defaultKeyboard = nil
 letters.currentKeyboard = nil
 
 function letters.load()
-  for i, device in ipairs(lovr.headset.getHands()) do
+  for i, device in ipairs({"hand/left", "hand/right"}) do
     local hand = letters.Hand:new{device=device}
     table.insert(letters.hands, hand)
   end
