@@ -14,7 +14,7 @@ end
 function Hand:draw()
   if not lovr.headset.isTracked(self.device) then return end
   if self.model then
-    model:draw(mat4(lovr.headset.getPose(hand)))
+    self.model:draw(mat4(lovr.headset.getPose(self.device)))
   else
     lovr.graphics.setColor(0.5, 0.7, 0.5)
     lovr.graphics.box('fill', self.from, .03, .04, .06, lovr.headset.getOrientation(self.device))
