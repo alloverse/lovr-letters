@@ -38,7 +38,10 @@ function Hand:update()
   local highlightedItem = nil
   Hand.letters.world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape, hx, hy, hz)
     highlightedItem = shape:getCollider():getUserData()
-    self.to = lovr.math.newVec3(hx, hy, hz)
+    local newPoint = lovr.math.newVec3(hx, hy, hz)
+    if (self.to - self.from):length() > (newPoint - self.from):length() then
+      self.to = newPoint
+    end
   end)
   if self.highlightedItem ~= highlightedItem then 
     lovr.headset.vibrate(self.device, 0.5, 0.05) 
