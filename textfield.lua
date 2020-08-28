@@ -68,6 +68,7 @@ function TextField:update()
 end
 
 function TextField:onKeyPressed(code, scancode, repeated)
+  -- lol this is hard-coding a US keyboard layout and shift key behavior... think we're gonna have to delegate to OS somehow
   if code == "backspace" then
     self.text = self.text:sub(1, -2)
   elseif code == "space" then
@@ -82,7 +83,10 @@ function TextField:onKeyPressed(code, scancode, repeated)
     self:resignKey()
   elseif #code == 1 then
     if self.caps then
-      code = string.upper(code)
+      if code == ";" then code = ":"
+      else
+        code = string.upper(code)
+      end
     end
     self.text = self.text .. code
   end
