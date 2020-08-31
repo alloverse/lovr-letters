@@ -8,7 +8,8 @@ local TextField = {
   isKey = false,
   caps = false,
   isHighlighted = false,
-  onReturn = function(field, text) return true end -- whether to insert the return or not 
+  onReturn = function(field, text) return true end, -- whether to insert the return or not 
+  onChange = function(field, oldText, newText) return true end, -- whether to accept change
 }
 
 function TextField:new(o)
@@ -68,14 +69,15 @@ function TextField:update()
 end
 
 function TextField:onKeyPressed(code, scancode, repeated)
+  local newText = self.text
   -- lol this is hard-coding a US keyboard layout and shift key behavior... think we're gonna have to delegate to OS somehow
   if code == "backspace" then
-    self.text = self.text:sub(1, -2)
+    newText = self.text:sub(1, -2)
   elseif code == "space" then
-    self.text = self.text .. " "
-  elseif code == "return" then
+    newText = self.text .. " "
+  elseif code == "return" or code == "enter" then
     if self.onReturn(self, self.text) then
-      self.text = self.text .. "\n"
+      newText = self.text .. "\n"
     end
   elseif code == "lshift" or code == "rshift" then
     self.caps = true
@@ -88,7 +90,11 @@ function TextField:onKeyPressed(code, scancode, repeated)
         code = string.upper(code)
       end
     end
-    self.text = self.text .. code
+    newText = self.text .. code
+  end
+
+  if self.onChange(self, self.text, newText) then
+    self.text = newText
   end
 end
 
