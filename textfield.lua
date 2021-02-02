@@ -73,37 +73,29 @@ function TextField:onKeyPressed(code, scancode, repeated)
   -- lol this is hard-coding a US keyboard layout and shift key behavior... think we're gonna have to delegate to OS somehow
   if code == "backspace" then
     newText = self.text:sub(1, -2)
-  elseif code == "space" then
-    newText = self.text .. " "
   elseif code == "return" or code == "enter" then
     if self.onReturn(self, self.text) then
       newText = self.text .. "\n"
     end
-  elseif code == "lshift" or code == "rshift" then
-    self.caps = true
   elseif code == "escape" then
     self:resignKey()
-  elseif #code == 1 then
-    if self.caps then
-      if code == ";" then code = ":"
-      else
-        code = string.upper(code)
-      end
-    end
-    newText = self.text .. code
   end
 
-  if self.onChange(self, self.text, newText) then
+  if newText ~= self.text and self.onChange(self, self.text, newText) then
     self.text = newText
   end
 end
 
 function TextField:onKeyReleased(code, scancode)
-  if code == "lshift" or code == "rshift" then
-    self.caps = false
-  end
 end
 
+function TextField:onTextInput(code, scancode)
+  local newText = self.text .. code
+
+  if newText ~= self.text and self.onChange(self, self.text, newText) then
+    self.text = newText
+  end
+end
 
 function TextField:select()
 end
@@ -131,6 +123,8 @@ function TextField:makeKey()
   self.oldReleasedHandler = lovr.handlers["keyreleased"]
   lovr.handlers["keypressed"] = function(a, b, c) self:onKeyPressed(a,b,c) end
   lovr.handlers["keyreleased"] = function(a, b) self:onKeyReleased(a,b) end
+  lovr.handlers["textinput"] = function(text, code) self:onTextInput(text, code) end
+  
   TextField.letters.displayKeyboard()
 end
 function TextField:resignKey()

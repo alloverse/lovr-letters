@@ -1,4 +1,6 @@
-local HoverKeyboard = {}
+local HoverKeyboard = {
+  caps=false,
+}
 function HoverKeyboard:new(o)
   o = o or {}
   setmetatable(o, self)
@@ -26,10 +28,23 @@ function HoverKeyboard:_createButtons()
         size = size,
         position = lovr.math.newVec3(-1.0 + keyIndex * size.x, 2.0 - rowIndex*size.y, -2.0),
         
-        onPressed = function() 
+        onPressed = function(button)
+          if key == "lshift" then
+            self.caps=button.selected
+          end
           lovr.event.push("keypressed", key, -1, false)
+          if rowIndex < 4 then
+            local character = key
+            if self.caps then
+              character = string.upper(key)
+            end
+            lovr.event.push("textinput", character, -1)
+          end
         end,
-        onReleased = function() 
+        onReleased = function(button)
+          if key == "lshift" then
+            self.caps=button.selected
+          end
           lovr.event.push("keyreleased", key, -1)
         end,
         label = key,
