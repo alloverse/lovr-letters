@@ -1,6 +1,6 @@
 local mod = (...):match("(.-)[^%.]+$") 
 
-local letters = {
+letters = {
   HoverKeyboard = require(mod .. 'hoverkeyboard'),
   Button = require(mod .. 'button'),
   TextField = require(mod .. 'textfield'),
@@ -11,8 +11,24 @@ for k, class in pairs(letters) do
   class.letters = letters
 end
 
+local lovrHeadset = {}
+local mt = {
+  -- just removes 'self' from calls so we can use : index on letters.headset,
+  -- so it can be overridden with a class-style headset.
+  __index = function(t, key)
+    return function(...)
+      local args = {...}
+      table.remove(args, 1)
+      return lovr.headset[key](unpack(args))
+    end
+  end
+}
+setmetatable(lovrHeadset, mt)
+
+
 -- global state for the module
 letters.hands = {}
+letters.headset = lovrHeadset
 letters.world = lovr.physics.newWorld()
 
 -- Set this from your code to make that kind of keyboard
