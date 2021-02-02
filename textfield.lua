@@ -17,7 +17,7 @@ function TextField:new(o)
   setmetatable(o, self)
   self.__index = self
   -- TODO: Update collider to match size when text changes
-  o.collider = TextField.letters.world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.width, o.font:getHeight()*o.fontScale, 0.1)
+  o.collider = TextField.letters.world:newBoxCollider(o.position.x + (o.width/2), o.position.y - (o.font:getHeight()*o.fontScale/2), o.position.z, o.width, o.font:getHeight()*o.fontScale, 0.1)
   o.collider:setUserData(o)
   return o
 end
