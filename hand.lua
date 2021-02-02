@@ -44,7 +44,7 @@ function Hand:update()
     end
   end)
   if self.highlightedItem ~= highlightedItem then 
-    lovr.headset.vibrate(self.device, 0.5, 0.05) 
+    lovr.headset.vibrate(self.device, 0.4, 0.02, 800) 
     if self.highlightedItem and self.highlightedItem.dehighlight then self.highlightedItem:dehighlight(self) end
     if highlightedItem and highlightedItem.highlight then highlightedItem:highlight(self) end
     self.highlightedItem = highlightedItem
@@ -53,11 +53,11 @@ function Hand:update()
   if lovr.headset.isDown(self.device, "trigger") and self.highlightedItem ~= nil and self.selectedItem == nil then
     if self.highlightedItem.select then self.highlightedItem:select(self) end
     self.selectedItem = self.highlightedItem
-    lovr.headset.vibrate(self.device, 0.7, 0.2, 100)
+    lovr.headset.vibrate(self.device, 0.6, 0.02, 100)
   end
   if not lovr.headset.isDown(self.device, "trigger") and self.selectedItem ~= nil then
     if self.highlightedItem == self.selectedItem then
-      lovr.headset.vibrate(self.device, 0.7, 0.2, 100)
+      lovr.headset.vibrate(self.device, 0.7, 0.03, 400)
       if self.selectedItem.actuate then self.selectedItem:actuate(self) end
     end
     if self.selectedItem.deselect then self.selectedItem:deselect(self) end
