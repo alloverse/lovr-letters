@@ -15,7 +15,7 @@ function lovr.load()
   letters.defaultKeyboard = letters.HoverKeyboard
 
   table.insert(drawables, letters.Button:new{
-    position = lovr.math.newVec3(-0.3, 1.2, -1),
+    position = lovr.math.newVec3(-0.3, 2.0, -2),
     onPressed = function() 
       letters.defaultKeyboard = letters.HoverKeyboard
       drawables[2]:setSelected(false)
@@ -24,7 +24,7 @@ function lovr.load()
     isToggle = true
   })
   table.insert(drawables, letters.Button:new{
-    position = lovr.math.newVec3(0.3, 1.2, -1),
+    position = lovr.math.newVec3(0.3, 2.0, -2),
     onPressed = function() 
       letters.defaultKeyboard = letters.ButterflyKeyboard
       drawables[1]:setSelected(false)

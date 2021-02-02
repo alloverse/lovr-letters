@@ -6,6 +6,9 @@ function HoverKeyboard:new(o)
   setmetatable(o, self)
   self.__index = self
   o:_createButtons()
+  o.transform = lovr.math.newMat4()
+    :translate(-1.0, 1.2, -2.0)
+    :rotate(-3.14/4, 1, 0, 0)
   return o
 end
 function HoverKeyboard:remove()
@@ -26,7 +29,7 @@ function HoverKeyboard:_createButtons()
       local size = lovr.math.newVec3((rowIndex == 4) and 0.36 or 0.2, 0.2, 0.1)
       table.insert(self.buttons, HoverKeyboard.letters.Button:new{
         size = size,
-        position = lovr.math.newVec3(-1.0 + keyIndex * size.x, 2.0 - rowIndex*size.y, -2.0),
+        position = lovr.math.newVec3(0 + keyIndex * size.x, 0 - rowIndex*size.y, 0),
         
         onPressed = function(button)
           if key == "lshift" then
@@ -57,9 +60,12 @@ function HoverKeyboard:update()
 
 end
 function HoverKeyboard:draw()
+  lovr.graphics.push()
+  lovr.graphics.transform(self.transform)
   for i, b in ipairs(self.buttons) do
     b:draw()
   end
+  lovr.graphics.pop()
 end
 
 return HoverKeyboard
