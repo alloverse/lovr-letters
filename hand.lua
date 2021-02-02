@@ -53,11 +53,11 @@ function Hand:update()
   if lovr.headset.isDown(self.device, "trigger") and self.highlightedItem ~= nil and self.selectedItem == nil then
     if self.highlightedItem.select then self.highlightedItem:select(self) end
     self.selectedItem = self.highlightedItem
-    lovr.headset.vibrate(hand, 0.7, 0.2, 100)
+    lovr.headset.vibrate(self.device, 0.7, 0.2, 100)
   end
   if not lovr.headset.isDown(self.device, "trigger") and self.selectedItem ~= nil then
     if self.highlightedItem == self.selectedItem then
-      lovr.headset.vibrate(hand, 0.7, 0.2, 100)
+      lovr.headset.vibrate(self.device, 0.7, 0.2, 100)
       if self.selectedItem.actuate then self.selectedItem:actuate(self) end
     end
     if self.selectedItem.deselect then self.selectedItem:deselect(self) end
