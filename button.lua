@@ -28,16 +28,22 @@ function Button:draw()
   -- draw the boxes
   lovr.graphics.setShader()
   lovr.graphics.setColor(0.3, 0.3, 0.4, 1)
-  lovr.graphics.box('fill', self.position, self.size)
+  local x, y, z = self.position:unpack()
+  local w, h, d = self.size:unpack()
+  -- unpacks are deliberate to workaround bug in... .... luajit? lovr? lodr? I dunno
+  lovr.graphics.box('fill', x, y, z, w, h, d)
 
   lovr.graphics.setColor(0.5, 0.5, self.highlighted and 0.7 or 0.6, 1)
-  lovr.graphics.box('fill', buttonPos, self.size - lovr.math.vec3(0.05,0.05,0))
+  x, y, z = buttonPos:unpack()
+  w, h, d = (self.size - lovr.math.vec3(0.05,0.05,0)):unpack()
+  lovr.graphics.box('fill', x, y, z, w, h, d)
 
   -- draw the text
   lovr.graphics.setShader()
   lovr.graphics.setFont(self.font)
   lovr.graphics.setColor(0.9, 0.9, 0.9, 1)
-  lovr.graphics.print(self.label, buttonPos + lovr.math.vec3(0,0,self.size.z/2 + 0.01), 0.07)
+  x, y, z = (buttonPos + lovr.math.vec3(0,0,self.size.z/2 + 0.01)):unpack()
+  lovr.graphics.print(self.label, x, y, z, 0.07)
 end
 function Button:update()
 end
