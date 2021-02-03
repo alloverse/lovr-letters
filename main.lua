@@ -37,7 +37,11 @@ function lovr.load()
     onReturn = function() drawables[4]:makeKey(); return false; end,
     placeholder = "Name"
   })
-
+  table.insert(drawables, letters.TextField:new{
+    position = lovr.math.newVec3(-3, 4.3, -7),
+    font = font,
+    placeholder = "Favorite food"
+  })
   drawables[1]:deselect()
   drawables[3]:makeKey()
 
@@ -46,7 +50,7 @@ function lovr.load()
     table.insert(drawables, hand)
   end
 
-
+  
 end
 
 function lovr.update()
