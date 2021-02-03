@@ -56,9 +56,17 @@ function HoverKeyboard:_createButtons()
     end
   end
 end
-function HoverKeyboard:update()
 
+function HoverKeyboard:update()
+  for i, b in ipairs(self.buttons) do
+    local pos = b.position
+    local collider = b.collider
+    local m = lovr.math.mat4():mul(self.transform):translate(pos)
+    local x, y, z, sx, sy, sz, a, ax, ay, az = m:unpack()
+    collider:setPose(x, y, z, a, ax, ay, az)
+  end
 end
+
 function HoverKeyboard:draw()
   lovr.graphics.push()
   lovr.graphics.transform(self.transform)
