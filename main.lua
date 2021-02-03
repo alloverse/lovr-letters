@@ -4,14 +4,13 @@ local letters = require('letters')
 
 -- state
 local drawables = {}
-local font = lovr.graphics.newFont(32)
+local font = lovr.graphics.newFont(24)
 
 -- global
 function lovr.load()
   letters.load()
 
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
-  lovr.headset.setClipDistance(0.1, 3000)
   letters.defaultKeyboard = letters.HoverKeyboard
 
   table.insert(drawables, letters.Button:new{
@@ -32,24 +31,22 @@ function lovr.load()
     label = "Butterfly",
     isToggle = true
   })
-  font = lovr.graphics.newFont(24)
   table.insert(drawables, letters.TextField:new{
     position = lovr.math.newVec3(-3, 5, -7),
     font = font,
     onReturn = function() drawables[4]:makeKey(); return false; end,
     placeholder = "Name"
   })
-  table.insert(drawables, letters.TextField:new{
-    position = lovr.math.newVec3(-3, 4.3, -7),
-    font = font,
-    placeholder = "Favorite food"
-  })
+
   drawables[1]:deselect()
+  drawables[3]:makeKey()
 
   
   for i, hand in ipairs(letters.hands) do
     table.insert(drawables, hand)
   end
+
+
 end
 
 function lovr.update()

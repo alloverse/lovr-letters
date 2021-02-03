@@ -33,7 +33,7 @@ letters.world = lovr.physics.newWorld()
 
 -- Set this from your code to make that kind of keyboard
 -- appear automatically when you focus a text field
-letters.defaultKeyboard = nil
+letters.defaultKeyboard = letters.HoverKeyboard
 
 -- The keyboard currently being displayed automatically.
 -- Don't touch this, it's private.
@@ -58,6 +58,18 @@ end
 function letters.draw()
   if letters.currentKeyboard then
     letters.currentKeyboard:draw()
+  end
+  letters.debugDraw()
+end
+
+function letters.debugDraw()
+  lovr.graphics.setShader()
+  lovr.graphics.setColor(0.5, 0.5, 1.0, 1)
+  for _, collider in ipairs(letters.world:getColliders()) do
+    local x, y, z, a, ax, ay, az = collider:getPose()
+    local boxShape = collider:getShapes()[1]
+    local w, h, d = boxShape:getDimensions()
+    lovr.graphics.box("line", x, y, z, w, h, d, a, ax, ay, az)
   end
 end
 
