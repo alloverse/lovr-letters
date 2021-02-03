@@ -1,11 +1,12 @@
 local mod = (...):match("(.-)[^%.]+$") 
 
-letters = {
-  HoverKeyboard = require(mod .. 'hoverkeyboard'),
-  Button = require(mod .. 'button'),
-  TextField = require(mod .. 'textfield'),
-  Hand = require(mod .. "hand")
-}
+letters = {}
+letters.Node = require(mod .. 'node')
+letters.HoverKeyboard = require(mod .. 'hoverkeyboard')
+letters.Button = require(mod .. 'button')
+letters.TextField = require(mod .. 'textfield')
+letters.Hand = require(mod .. "hand")
+
 
 
 local lovrHeadset = {}
@@ -27,6 +28,7 @@ setmetatable(lovrHeadset, mt)
 letters.hands = {}
 letters.headset = lovrHeadset
 letters.world = lovr.physics.newWorld()
+letters.root = letters.Node:new{}
 
 -- Set this from your code to make that kind of keyboard
 -- appear automatically when you focus a text field
@@ -47,15 +49,11 @@ function letters.update()
   for i, hand in ipairs(letters.hands) do
     hand:update()
   end
-  if letters.currentKeyboard then
-    letters.currentKeyboard:update()
-  end
+  letters.root:update()
 end
 
 function letters.draw()
-  if letters.currentKeyboard then
-    letters.currentKeyboard:draw()
-  end
+  letters.root:transformAndDraw()
   letters.debugDraw()
 end
 
@@ -74,12 +72,13 @@ function letters.displayKeyboard()
   if not letters.currentKeyboard and letters.defaultKeyboard then
     -- todo: maybe save keyboard between invocations to save state
     letters.currentKeyboard = letters.defaultKeyboard:new()
+    letters.root:addChild(letters.currentKeyboard)
   end
 end
 
 function letters.hideKeyboard()
   if letters.currentKeyboard then
-    letters.currentKeyboard:remove()
+    letters.currentKeyboard:removeFromParent()
   end
   letters.currentKeyboard = nil
 end

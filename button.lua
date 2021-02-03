@@ -9,19 +9,17 @@ local Button = {
   isToggle = false,
   font = lovr.graphics.newFont(32)
 }
+setmetatable(Button, {__index=letters.Node})
+local Button_mt = {
+  __index = Button
+}
 
--- todo: reuse this button for the HoverKeyboard
 function Button:new(o)
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
-  o.collider = letters.world:newBoxCollider(o.position.x, o.position.y, o.position.z, o.size.x, o.size.y, o.size.z)
-  o.collider:setUserData(o)
+  o = letters.Node.new(self, o)
+  setmetatable(o, Button_mt)
   return o
 end
-function Button:remove()
-  self.collider:destroy()
-end
+
 function Button:draw()
   local buttonPos = self.position + lovr.math.vec3(0,0,(1.0-self.fraction) * 0.1 + 0.01)
 
