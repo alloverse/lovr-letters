@@ -6,10 +6,7 @@ letters = {
   TextField = require(mod .. 'textfield'),
   Hand = require(mod .. "hand")
 }
--- Tie the module's classes together
-for k, class in pairs(letters) do
-  class.letters = letters
-end
+
 
 local lovrHeadset = {}
 local mt = {

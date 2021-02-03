@@ -27,7 +27,7 @@ function HoverKeyboard:_createButtons()
   for rowIndex, row in ipairs(rows) do
     for keyIndex, key in ipairs(row) do
       local size = lovr.math.newVec3((rowIndex == 4) and 0.36 or 0.2, 0.2, 0.1)
-      table.insert(self.buttons, HoverKeyboard.letters.Button:new{
+      table.insert(self.buttons, letters.Button:new{
         size = size,
         position = lovr.math.newVec3(0 + keyIndex * size.x, 0 - rowIndex*size.y, 0),
         

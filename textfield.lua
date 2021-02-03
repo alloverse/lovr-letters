@@ -17,7 +17,7 @@ function TextField:new(o)
   setmetatable(o, self)
   self.__index = self
   -- TODO: Update collider to match size when text changes
-  o.collider = TextField.letters.world:newBoxCollider(o.position.x + (o.width/2), o.position.y - (o.font:getHeight()*o.fontScale/2), o.position.z, o.width, o.font:getHeight()*o.fontScale, 0.1)
+  o.collider = letters.world:newBoxCollider(o.position.x + (o.width/2), o.position.y - (o.font:getHeight()*o.fontScale/2), o.position.z, o.width, o.font:getHeight()*o.fontScale, 0.1)
   o.collider:setUserData(o)
   return o
 end
@@ -113,10 +113,10 @@ function TextField:dehighlight()
 end
 
 function TextField:makeKey()
-  if TextField.letters.currentEditor then
-    TextField.letters.currentEditor:resignKey()
+  if letters.currentEditor then
+    letters.currentEditor:resignKey()
   end
-  TextField.letters.currentEditor = self
+  letters.currentEditor = self
 
   self.isKey = true
   self.oldPressedHandler = lovr.handlers["keypressed"]
@@ -125,16 +125,16 @@ function TextField:makeKey()
   lovr.handlers["keyreleased"] = function(a, b) self:onKeyReleased(a,b) end
   lovr.handlers["textinput"] = function(text, code) self:onTextInput(text, code) end
   
-  TextField.letters.displayKeyboard()
+  letters.displayKeyboard()
 end
 function TextField:resignKey()
-  TextField.letters.currentEditor = nil
+  letters.currentEditor = nil
   self.isKey = false
   lovr.handlers["keypressed"] = self.oldPressedHandler
   lovr.handlers["keyreleased"] = self.oldReleasedHandler
   self.oldPressedHandler = nil
   self.oldReleasedHandler = nil
-  TextField.letters.hideKeyboard()
+  letters.hideKeyboard()
 end
 
 return TextField

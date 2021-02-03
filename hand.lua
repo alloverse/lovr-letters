@@ -36,7 +36,7 @@ function Hand:update()
   self.to:set(distantPoint)
 
   local highlightedItem = nil
-  Hand.letters.world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape, hx, hy, hz)
+  letters.world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape, hx, hy, hz)
     highlightedItem = shape:getCollider():getUserData()
     local newPoint = lovr.math.newVec3(hx, hy, hz)
     if (self.to - self.from):length() > (newPoint - self.from):length() then
