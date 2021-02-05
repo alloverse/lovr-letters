@@ -71,14 +71,19 @@ function Node:draw()
 
 end
 
-function Node:select(hand)
-  self:deselect(self.heldBy) -- if held by another hand
-  self.selected = true
-  self.heldBy = hand
-  local handTransform = lovr.math.mat4(lovr.headset.getPose(hand.device))
-  self.offset:set(handTransform:invert()):mul(self:transformInWorld())
+function Node:grab(hand)
+  if self.canBeGrabbed then
+    print("grab2")
+    self:ungrab(self.heldBy) -- if held by another hand
+    self.selected = true
+    self.heldBy = hand
+    local handTransform = lovr.math.mat4(lovr.headset.getPose(hand.device))
+    self.offset:set(handTransform:invert()):mul(self:transformInWorld())
+    return true
+  end
+  return false
 end
-function Node:deselect(hand)
+function Node:ungrab(hand)
   if self.heldBy == hand then
     self.selected = false
     self.heldBy = nil

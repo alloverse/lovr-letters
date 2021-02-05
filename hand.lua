@@ -111,8 +111,7 @@ function Hand:update()
   -- grab items with grip
   if letters.headset:isDown(self.device, "grip") and self.grabbedNode == nil then
     for _, node in ipairs(self.highlightedNodes) do
-      if node.node.grab then
-        node.node:grab(self)
+      if node.node.grab and node.node:grab(self) then
         self.grabbedNode = node.node
         letters.headset:vibrate(self.device, 0.6, 0.02, 100)
         break

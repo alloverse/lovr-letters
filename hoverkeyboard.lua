@@ -1,5 +1,6 @@
 local HoverKeyboard = {
-  caps=false,
+  caps= false,
+  canBeGrabbed= true
 }
 setmetatable(HoverKeyboard, {__index=letters.Node})
 local HoverKeyboard_mt = {
@@ -15,7 +16,6 @@ function HoverKeyboard:new(o)
     :translate(-0.0, 1.0, -2.0)
     :rotate(-3.14/4, 1, 0, 0)
   o:_createButtons()
-  
   return o
 end
 
@@ -61,13 +61,6 @@ function HoverKeyboard:_createButtons()
       })
     end
   end
-end
-
-function HoverKeyboard:grab(by)
-  self.heldBy = by
-end
-function HoverKeyboard:ungrab(by)
-  self.heldBy = nil
 end
 
 
