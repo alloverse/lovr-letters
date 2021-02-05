@@ -63,5 +63,12 @@ function HoverKeyboard:_createButtons()
   end
 end
 
+function HoverKeyboard:grab(by)
+  self.heldBy = by
+end
+function HoverKeyboard:ungrab(by)
+  self.heldBy = nil
+end
+
 
 return HoverKeyboard

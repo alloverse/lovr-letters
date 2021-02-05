@@ -81,11 +81,11 @@ function Hand:update()
   self.highlightedNodes = newlyHighlightedNodes
 
   -- select items with trigger
-  if letters.headset:isDown(self.device, "trigger") and self.selectedItem == nil then
+  if letters.headset:isDown(self.device, "trigger") and self.selectedNode == nil then
     for _, node in ipairs(self.highlightedNodes) do
       if node.node.select then
         node.node:select(self)
-        self.selectedItem = node.node
+        self.selectedNode = node.node
         letters.headset:vibrate(self.device, 0.6, 0.02, 100)
         break
       end
@@ -93,19 +93,37 @@ function Hand:update()
   end
 
   -- deselect items on released trigger, actuating on buttons and other clickables
-  if not letters.headset:isDown(self.device, "trigger") and self.selectedItem ~= nil then
+  if not letters.headset:isDown(self.device, "trigger") and self.selectedNode ~= nil then
     local found = false
     for _, node in ipairs(self.highlightedNodes) do
-      if node.node == self.selectedItem then found = true end
+      if node.node == self.selectedNode then found = true end
     end
     if found then
-      if self.selectedItem.actuate then
+      if self.selectedNode.actuate then
         letters.headset:vibrate(self.device, 0.7, 0.03, 400)
-        self.selectedItem:actuate(self) 
+        self.selectedNode:actuate(self) 
       end
     end
-    if self.selectedItem.deselect then self.selectedItem:deselect(self) end
-    self.selectedItem = nil
+    if self.selectedNode.deselect then self.selectedNode:deselect(self) end
+    self.selectedNode = nil
+  end
+
+  -- grab items with grip
+  if letters.headset:isDown(self.device, "grip") and self.grabbedNode == nil then
+    for _, node in ipairs(self.highlightedNodes) do
+      if node.node.grab then
+        node.node:grab(self)
+        self.grabbedNode = node.node
+        letters.headset:vibrate(self.device, 0.6, 0.02, 100)
+        break
+      end
+    end
+  end
+
+  -- deselect items on released trigger, actuating on buttons and other clickables
+  if not letters.headset:isDown(self.device, "grip") and self.grabbedNode ~= nil then
+    if self.grabbedNode.ungrab then self.grabbedNode:ungrab(self) end
+    self.grabbedNode = nil
   end
 end
 
