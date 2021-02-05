@@ -66,6 +66,16 @@ function letters.debugDraw()
     local w, h, d = boxShape:getDimensions()
     lovr.graphics.box("line", x, y, z, w, h, d, a, ax, ay, az)
   end
+  lovr.graphics.setColor(0.5, 1.0, 0.5, 1)
+  drawNode(letters.root)
+end
+
+function drawNode(node)
+  local x, y, z, sx, sy, sz, a, ax, ay, az = node:transformInWorld():unpack()
+  lovr.graphics.sphere(x, y, z, 0.1, a, ax, ay, az)
+  for i, n in ipairs(node.children) do
+    drawNode(n)
+  end
 end
 
 function letters.displayKeyboard()

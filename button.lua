@@ -43,8 +43,7 @@ function Button:draw()
   x, y, z = (buttonPos + lovr.math.vec3(0,0,self.size.z/2 + 0.01)):unpack()
   lovr.graphics.print(self.label, x, y, z, 0.07)
 end
-function Button:update()
-end
+
 function Button:highlight()
   self.highlighted = true
 end

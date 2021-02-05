@@ -102,7 +102,7 @@ function Node:update()
   end
   local x, y, z, w, h, d, a, ax, ay, az = self:transformInWorld():unpack()
   w, h, d = self.size:unpack()
-  self.collider:setPose(x - w/2, y - h/2, z - d/2, a, ax, ay, az)
+  self.collider:setPose(x, y, z, a, ax, ay, az)
 
   for _, child in ipairs(self.children) do
     child:update()

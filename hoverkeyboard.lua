@@ -31,7 +31,11 @@ function HoverKeyboard:_createButtons()
       local size = lovr.math.newVec3((rowIndex == 4) and 0.36 or 0.2, 0.2, 0.1)
       self:addChild(letters.Button:new{
         size = size,
-        transform = lovr.math.newMat4():translate(keyIndex * size.x, -rowIndex*size.y, 0),
+        transform = lovr.math.newMat4():translate(
+            -self.size.x/2 + keyIndex * size.x,
+            self.size.y/2 - rowIndex*size.y,
+            self.size.z/2
+        ),
         
         onPressed = function(button)
           if key == "lshift" then
