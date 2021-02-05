@@ -9,6 +9,10 @@ function Hand:new(o)
   o.model = letters.headset.newModel and letters.headset:newModel(o.device)
   o.from = lovr.math.newVec3()
   o.to = lovr.math.newVec3()
+
+  o.highlightedNodes = {}
+  o.selectedNode = nil
+  o.grabbedNode = nil
   return o
 end
 function Hand:draw()
@@ -35,30 +39,66 @@ function Hand:update()
   self.from:set(handPos)
   self.to:set(distantPoint)
 
-  local highlightedItem = nil
+  local newlyHighlightedNodes = {}
   letters.world:raycast(self.from.x, self.from.y, self.from.z, self.to.x, self.to.y, self.to.z, function(shape, hx, hy, hz)
-    highlightedItem = shape:getCollider():getUserData()
     local newPoint = lovr.math.newVec3(hx, hy, hz)
-    if (self.to - self.from):length() > (newPoint - self.from):length() then
-      self.to = newPoint
-    end
+    table.insert(newlyHighlightedNodes, {
+      distance= (newPoint - self.from):length(),
+      node = shape:getCollider():getUserData()
+    })
   end)
-  if self.highlightedItem ~= highlightedItem then 
-    letters.headset:vibrate(self.device, 0.4, 0.02, 800) 
-    if self.highlightedItem and self.highlightedItem.dehighlight then self.highlightedItem:dehighlight(self) end
-    if highlightedItem and highlightedItem.highlight then highlightedItem:highlight(self) end
-    self.highlightedItem = highlightedItem
+  table.sort(newlyHighlightedNodes, function(x, y) return x.distance < y.distance end)
+  
+
+  -- unhighlight no longer highlighted nodes
+  for _, oldNode in ipairs(self.highlightedNodes) do
+    local existed = false
+    for _, newNode in ipairs(newlyHighlightedNodes) do
+      if newNode.node == oldNode.node then existed = true end
+    end
+    if existed == false then
+      if oldNode.node.dehighlight then
+        oldNode.node:dehighlight()
+      end
+    end
+  end
+  -- highlight fresly highlighted nodes
+  for _, newNode in ipairs(newlyHighlightedNodes) do
+    local existed = false
+    for _, oldNode in ipairs(self.highlightedNodes) do
+      if newNode.node == oldNode.node then existed = true end
+    end
+    if existed == false then
+      if newNode.node.highlight then
+        newNode.node:highlight(self)
+      end
+    end
+  end
+  self.highlightedNodes = newlyHighlightedNodes
+
+  -- select items with trigger
+  if letters.headset:isDown(self.device, "trigger") and self.selectedItem == nil then
+    for _, node in ipairs(self.highlightedNodes) do
+      if node.node.select then
+        node.node:select(self)
+        self.selectedItem = node.node
+        letters.headset:vibrate(self.device, 0.6, 0.02, 100)
+        break
+      end
+    end
   end
 
-  if letters.headset:isDown(self.device, "trigger") and self.highlightedItem ~= nil and self.selectedItem == nil then
-    if self.highlightedItem.select then self.highlightedItem:select(self) end
-    self.selectedItem = self.highlightedItem
-    letters.headset:vibrate(self.device, 0.6, 0.02, 100)
-  end
+  -- deselect items on released trigger, actuating on buttons and other clickables
   if not letters.headset:isDown(self.device, "trigger") and self.selectedItem ~= nil then
-    if self.highlightedItem == self.selectedItem then
-      letters.headset:vibrate(self.device, 0.7, 0.03, 400)
-      if self.selectedItem.actuate then self.selectedItem:actuate(self) end
+    local found = false
+    for _, node in ipairs(self.highlightedNodes) do
+      if node.node == self.selectedItem then found = true end
+    end
+    if found then
+      if self.selectedItem.actuate then
+        letters.headset:vibrate(self.device, 0.7, 0.03, 400)
+        self.selectedItem:actuate(self) 
+      end
     end
     if self.selectedItem.deselect then self.selectedItem:deselect(self) end
     self.selectedItem = nil
