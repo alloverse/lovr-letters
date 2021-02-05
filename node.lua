@@ -24,6 +24,7 @@ end
 function Node:addChild(c)
   table.insert(self.children, c)
   c.parent = self
+  return c
 end
 
 function Node:removeFromParent()

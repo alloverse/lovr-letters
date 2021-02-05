@@ -1,11 +1,15 @@
 local Hand = {
   device = "hand/left"
 }
+setmetatable(Hand, {__index=letters.Node})
+local Hand_mt = {
+  __index = Hand
+}
 
 function Hand:new(o)
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
+  o = letters.Node.new(self, o)
+  setmetatable(o, Hand_mt)
+
   o.model = letters.headset.newModel and letters.headset:newModel(o.device)
   o.from = lovr.math.newVec3()
   o.to = lovr.math.newVec3()

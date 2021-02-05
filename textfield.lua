@@ -11,11 +11,14 @@ local TextField = {
   onReturn = function(field, text) return true end, -- whether to insert the return or not 
   onChange = function(field, oldText, newText) return true end, -- whether to accept change
 }
+setmetatable(TextField, {__index=letters.Node})
+local TextField_mt = {
+  __index = TextField
+}
 
 function TextField:new(o)
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
+  o = letters.Node.new(self, o)
+  setmetatable(o, TextField_mt)
   -- TODO: Update collider to match size when text changes
   o.collider = letters.world:newBoxCollider(o.position.x + (o.width/2), o.position.y - (o.font:getHeight()*o.fontScale/2), o.position.z, o.width, o.font:getHeight()*o.fontScale, 0.1)
   o.collider:setUserData(o)
