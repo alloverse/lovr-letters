@@ -12,7 +12,7 @@ function HoverKeyboard:new(o)
   o = letters.Node.new(self, o)
   setmetatable(o, HoverKeyboard_mt)
   o.transform
-    :translate(-1.0, 1.2, -2.0)
+    :translate(-0.0, 1.0, -2.0)
     :rotate(-3.14/4, 1, 0, 0)
   o:_createButtons()
   

@@ -54,7 +54,7 @@ end
 
 function letters.draw()
   letters.root:transformAndDraw()
-  letters.debugDraw()
+  --letters.debugDraw()
 end
 
 function letters.debugDraw()
@@ -67,14 +67,14 @@ function letters.debugDraw()
     lovr.graphics.box("line", x, y, z, w, h, d, a, ax, ay, az)
   end
   lovr.graphics.setColor(0.5, 1.0, 0.5, 1)
-  drawNode(letters.root)
+  debugDrawNode(letters.root)
 end
 
-function drawNode(node)
+function debugDrawNode(node)
   local x, y, z, sx, sy, sz, a, ax, ay, az = node:transformInWorld():unpack()
   lovr.graphics.sphere(x, y, z, 0.1, a, ax, ay, az)
   for i, n in ipairs(node.children) do
-    drawNode(n)
+    debugDrawNode(n)
   end
 end
 
