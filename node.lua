@@ -28,8 +28,6 @@ function Node:addChild(c)
 end
 
 function Node:removeFromParent()
-  self.collider:destroy()
-
   for i, c in ipairs(self.parent.children) do
     if c == self then
       table.remove(self.parent.children, i)
@@ -37,6 +35,13 @@ function Node:removeFromParent()
       return
     end
   end
+end
+
+function Node:destroy()
+  for i, c in ipairs(self.children) do
+    c:destroy()
+  end
+  self.collider:destroy()
 end
 
 function Node:transformInWorld()

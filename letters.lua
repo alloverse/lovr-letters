@@ -75,6 +75,7 @@ end
 function letters.hideKeyboard()
   if letters.currentKeyboard then
     letters.currentKeyboard:removeFromParent()
+    letters.currentKeyboard:destroy()
   end
   letters.currentKeyboard = nil
 end
