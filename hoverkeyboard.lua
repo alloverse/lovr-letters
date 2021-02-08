@@ -7,28 +7,32 @@ local HoverKeyboard_mt = {
   __index = HoverKeyboard
 }
 
+local s = 0.08
+local rows = {
+  {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'},
+  {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'},
+  {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'},
+  {'escape', 'lshift', 'space', 'backspace', 'return'}
+}
+
 function HoverKeyboard:new(o)
   o = o or {}
-  o.size = lovr.math.newVec3(2, 1, 0.1)
+  o.size = lovr.math.newVec3(#rows[1] * s, s * #rows, 0.1)
   o = letters.Node.new(self, o)
   setmetatable(o, HoverKeyboard_mt)
   o.transform
-    :translate(-0.0, 0.7, -2.0)
+    :translate(-0.0, 0.7, -1.0)
     :rotate(-3.14/4, 1, 0, 0)
   o:_createButtons()
   return o
 end
 
 function HoverKeyboard:_createButtons()
-  local rows = {
-    {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'},
-    {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'},
-    {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'},
-    {'escape', 'lshift', 'space', 'backspace', 'return'}
-  }
+
+  
   for rowIndex, row in ipairs(rows) do
     for keyIndex, key in ipairs(row) do
-      local size = lovr.math.newVec3((rowIndex == 4) and 0.36 or 0.2, 0.2, 0.1)
+      local size = lovr.math.newVec3((rowIndex == 4) and s*1.8 or s, s, 0.05)
       self:addChild(letters.Button:new{
         size = size,
         transform = lovr.math.newMat4():translate(
