@@ -77,7 +77,7 @@ function Node:grab(hand)
     self:ungrab(self.heldBy) -- if held by another hand
     self.selected = true
     self.heldBy = hand
-    local handTransform = lovr.math.mat4(letters.headset:getPose(hand.device))
+    local handTransform = lovr.math.mat4(letters.headset.getPose(hand.device))
     self.offset:set(handTransform:invert()):mul(self:transformInWorld())
     return true
   end
@@ -92,7 +92,7 @@ end
 
 function Node:update()
   if self.heldBy then
-    stickX, stickY = letters.headset:getAxis(self.heldBy.device, "thumbstick")
+    stickX, stickY = letters.headset.getAxis(self.heldBy.device, "thumbstick")
 
     if math.abs(stickY) > 0.05 then
       local translation = lovr.math.mat4():translate(0,0,-stickY*0.1)
@@ -101,7 +101,7 @@ function Node:update()
         self.offset:set(newOffset)
       end
     end
-    local handTransform = lovr.math.mat4(letters.headset:getPose(self.heldBy.device))
+    local handTransform = lovr.math.mat4(letters.headset.getPose(self.heldBy.device))
     local newInWorld = handTransform:mul(self.offset)
     local newInLocal = Node.convert(newInWorld, nil, self.parent)
     self.transform:set(newInLocal)

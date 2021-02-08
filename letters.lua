@@ -8,25 +8,9 @@ letters.TextField = require(mod .. 'textfield')
 letters.Hand = require(mod .. "hand")
 
 
-
-local lovrHeadset = {}
-local mt = {
-  -- just removes 'self' from calls so we can use : index on letters.headset,
-  -- so it can be overridden with a class-style headset.
-  __index = function(t, key)
-    return function(...)
-      local args = {...}
-      table.remove(args, 1)
-      return lovr.headset[key](unpack(args))
-    end
-  end
-}
-setmetatable(lovrHeadset, mt)
-
-
 -- global state for the module
 letters.hands = {}
-letters.headset = lovrHeadset
+letters.headset = lovr.headset
 letters.world = lovr.physics.newWorld()
 letters.root = letters.Node:new{}
 
