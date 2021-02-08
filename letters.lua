@@ -47,7 +47,9 @@ end
 
 function letters.update()
   for i, hand in ipairs(letters.hands) do
-    hand:update()
+    if hand.parent == nil then -- if it's already in letters.root, no need to manually update
+      hand:update()
+    end
   end
   letters.root:update()
 end
