@@ -23,6 +23,8 @@ letters.defaultKeyboard = letters.HoverKeyboard
 letters.currentKeyboard = nil
 
 function letters.load()
+  if #letters.hands == 2 then return end
+  
   for i, device in ipairs({"hand/left", "hand/right"}) do
     local hand = letters.Hand:new{device=device}
     table.insert(letters.hands, hand)
