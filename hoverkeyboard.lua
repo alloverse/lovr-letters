@@ -9,11 +9,13 @@ local HoverKeyboard_mt = {
 
 local s = 0.08
 local rows = {
+  {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'},
   {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'},
   {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'},
   {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'},
   {'escape', 'lshift', 'space', 'backspace', 'return'}
 }
+local specialKeysRowIndex = 5
 
 function HoverKeyboard:new(o)
   o = o or {}
@@ -32,7 +34,7 @@ function HoverKeyboard:_createButtons()
   
   for rowIndex, row in ipairs(rows) do
     for keyIndex, key in ipairs(row) do
-      local size = lovr.math.newVec3((rowIndex == 4) and s*1.8 or s, s, 0.05)
+      local size = lovr.math.newVec3((rowIndex == specialKeysRowIndex) and s*1.8 or s, s, 0.05)
       self:addChild(letters.Button:new{
         size = size,
         transform = lovr.math.newMat4():translate(
@@ -46,7 +48,7 @@ function HoverKeyboard:_createButtons()
             self.caps=button.selected
           end
           lovr.event.push("keypressed", key, -1, false)
-          if rowIndex < 4 then
+          if rowIndex < specialKeysRowIndex then
             local character = key
             if self.caps then
               character = string.upper(key)
