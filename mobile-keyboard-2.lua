@@ -1,26 +1,26 @@
 -- tab and arrows keys don't do anything in textfield, so I haven't tested them yet
 -- ctrl and caps lock don't work
 
-local MobileKeyboard1 = {
+local MobileKeyboard2 = {
   caps= false,
   canBeGrabbed= true
 }
-setmetatable(MobileKeyboard1, {__index=letters.Node})
-local MobileKeyboard1_mt = {
-  __index = MobileKeyboard1
+setmetatable(MobileKeyboard2, {__index=letters.Node})
+local MobileKeyboard2_mt = {
+  __index = MobileKeyboard2
 }
 
 local s = 0.08
 local keysWide = 15
 local rows = {
   {
-    '[', ']', '{', '}', '#', '%', '^', '*', '+', '=', 
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 
   },
   {
-    '_', '\\', '|', '~', '<', '>', '€', '£', '¥', '•', 
+    '-', '/', ':', ';', '(', ')', '$', '&', '@', '"', 
   },
   {
-    {'', label = '123', type = 'function', width = 1.25},
+    {'', label = '#+=', type = 'function', width = 1.25},
     {'', type = 'spacer', width = .25},
     {'.', width = 1.4},
     {',', width = 1.4},
@@ -38,11 +38,11 @@ local rows = {
   },
 }
 
-function MobileKeyboard1:new(o)
+function MobileKeyboard2:new(o)
   o = o or {}
   o.size = lovr.math.newVec3(keysWide * s, s * #rows, 0.1)
   o = letters.Node.new(self, o)
-  setmetatable(o, MobileKeyboard1_mt)
+  setmetatable(o, MobileKeyboard2_mt)
   o.transform
     :translate(-0.0, 1.5, -1.3)
     :rotate(-6.28/10, 1, 0, 0)
@@ -50,7 +50,7 @@ function MobileKeyboard1:new(o)
   return o
 end
 
-function MobileKeyboard1:_createButtons()
+function MobileKeyboard2:_createButtons()
 
   
   for rowIndex, row in ipairs(rows) do
@@ -130,4 +130,4 @@ function MobileKeyboard1:_createButtons()
 end
 
 
-return MobileKeyboard1
+return MobileKeyboard2
