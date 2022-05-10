@@ -68,8 +68,8 @@ local rows = {
     {'rshift', label = 'shift', type = 'function', width = 2.5},
   },
   {
-    {'lctrl', label = 'ctrl', type = 'function', width = 3},
-    {'lalt',  label = 'alt',  type = 'function', width = 1.5},
+    {'lctrl', label = 'ctrl', type = 'function', width = 2.5},
+    {'lalt',  label = 'alt',  type = 'function', width = 2},
     {'space', label = '    ', type = 'function', width = 5},
     {'ralt',  label = 'alt',  type = 'function', width = 1.5},
     {'up',    label = '▲',    type = 'function', width = 2},

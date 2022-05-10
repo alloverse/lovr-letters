@@ -2,7 +2,7 @@ local mod = (...):match("(.-)[^%.]+$")
 
 letters = {}
 letters.Node = require(mod .. 'node')
-letters.HoverKeyboard = require(mod .. 'hoverkeyboard')
+letters.HoverKeyboard = require(mod .. 'hover-keyboard')
 letters.Button = require(mod .. 'button')
 letters.TextField = require(mod .. 'textfield')
 letters.Hand = require(mod .. "hand")
