@@ -54,6 +54,10 @@ function HoverKeyboard:_createButtons()
               character = string.upper(key)
             end
             lovr.event.push("textinput", character, -1)
+          else
+            if key == "space" then
+              lovr.event.push("textinput", " ", 32)
+            end
           end
         end,
         onReleased = function(button)
