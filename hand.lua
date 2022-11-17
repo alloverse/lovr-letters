@@ -52,6 +52,11 @@ function Hand:update()
     })
   end)
   table.sort(newlyHighlightedNodes, function(x, y) return x.distance < y.distance end)
+
+  -- only highlight the nearest node
+  while #newlyHighlightedNodes > 1 do
+    table.remove(newlyHighlightedNodes, 2)
+  end
   
 
   -- unhighlight no longer highlighted nodes
