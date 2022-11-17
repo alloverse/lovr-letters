@@ -37,11 +37,15 @@ function Button:draw()
   w, h, d = lovr.math.vec3(self.size.x*0.8, self.size.y*0.8 , self.size.z):unpack()
   lovr.graphics.box('fill', x, y, z, w, h, d)
 
+  local b = self.highlighted and 0.7 or 0.9
+  lovr.graphics.setColor(b, b, b, 1)
+  lovr.graphics.plane('fill', x, y, z+d/2+0.001, w, h)
+
   -- draw the text
   lovr.graphics.setShader()
   lovr.graphics.setFont(self.font)
-  lovr.graphics.setColor(0.9, 0.9, 0.9, 1)
-  x, y, z = (buttonPos + lovr.math.vec3(0,0,self.size.z/2 + 0.001)):unpack()
+  lovr.graphics.setColor(0.2, 0.2, 0.2, 1)
+  x, y, z = (buttonPos + lovr.math.vec3(0,0,self.size.z/2 + 0.002)):unpack()
   lovr.graphics.print(self.label, x, y, z, 0.04)
 end
 
