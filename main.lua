@@ -14,26 +14,34 @@ function lovr.load()
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
   letters.defaultKeyboard = letters.HoverKeyboard
 
-  app.hoverButton = letters.root:addChild(letters.Button:new{
-    transform = lovr.math.newMat4():translate(-0.3, 2.0, -2),
-    onPressed = function() 
-      letters.defaultKeyboard = letters.HoverKeyboard
-      app.butterflyButton:setSelected(false)
-    end,
-    label = "Hover",
-    size = lovr.math.newVec3(0.4, 0.2, 0.1),
-    isToggle = true
-  })
-  app.butterflyButton = letters.root:addChild(letters.Button:new{
-    transform = lovr.math.newMat4():translate(0.3, 2.0, -2),
-    onPressed = function() 
-      letters.defaultKeyboard = letters.ButterflyKeyboard
-      app.hoverButton:setSelected(false)
-    end,
-    label = "Butterfly",
-    size = lovr.math.newVec3(0.4, 0.2, 0.1),
-    isToggle = true
-  })
+  local sampleKeyboards = {
+    Hover= letters.HoverKeyboard,
+    Indeck= letters.IndeckKeyboard
+  }
+  local x = -0.3
+  for name, keeb in pairs(sampleKeyboards) do
+    keeb.button = letters.root:addChild(letters.Button:new{
+      transform = lovr.math.newMat4():translate(x, 2.0, -2),
+      onPressed = function() 
+        letters.defaultKeyboard = keeb
+        if letters.currentKeyboard ~= nil then
+          letters.hideKeyboard()
+          letters.displayKeyboard()
+        end
+        for _, keeb2 in pairs(sampleKeyboards) do
+          if keeb2 ~= keeb then
+            keeb2.button:setSelected(false)
+          end
+        end
+      end,
+      label = name,
+      size = lovr.math.newVec3(0.4, 0.2, 0.1),
+      isToggle = true
+    })  
+    x = x + 0.6
+  end
+  
+  -- Sample UI to test keyboards
   local foodField = letters.root:addChild(letters.TextField:new{
     transform = lovr.math.newMat4():translate(-3, 4.3, -7),
     font = font,
@@ -45,7 +53,7 @@ function lovr.load()
     onReturn = function() foodField:makeKey(); return false; end,
     placeholder = "Name"
   })
-  app.hoverButton:deselect()
+  sampleKeyboards.Hover.button:deselect()
   nameField:makeKey()
 
   for i, hand in ipairs(letters.hands) do

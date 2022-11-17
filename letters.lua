@@ -3,6 +3,7 @@ local mod = (...):match("(.-)[^%.]+$")
 letters = {}
 letters.Node = require(mod .. 'node')
 letters.HoverKeyboard = require(mod .. 'hoverkeyboard')
+letters.IndeckKeyboard = require(mod .. 'indeckkeyboard')
 letters.Button = require(mod .. 'button')
 letters.TextField = require(mod .. 'textfield')
 letters.Hand = require(mod .. "hand")
