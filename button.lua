@@ -7,7 +7,7 @@ local Button = {
   label = "Untitled",
   fraction = 0.0,
   isToggle = false,
-  font = lovr.graphics.newFont('Inter.ttf', 32)
+  font = lovr.graphics.newFont('assets/fonts/Inter.ttf', 32)
 }
 setmetatable(Button, {__index=letters.Node})
 local Button_mt = {
