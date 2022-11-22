@@ -12,7 +12,6 @@ function lovr.load()
   letters.load()
 
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
-  letters.defaultKeyboard = letters.HoverKeyboard
 
   local x = -0.3
   for name, keeb in pairs(letters.keyboards) do
@@ -49,7 +48,7 @@ function lovr.load()
     onReturn = function() foodField:makeKey(); return false; end,
     placeholder = "Name"
   })
-  letters.keyboards.Hover.button:deselect()
+  letters.keyboards.Indeck.button:deselect()
   nameField:makeKey()
 
   for i, hand in ipairs(letters.hands) do

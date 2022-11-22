@@ -2,11 +2,9 @@ local mod = (...):match("(.-)[^%.]+$")
 
 letters = {}
 letters.Node = require(mod .. 'node')
-letters.HoverKeyboard = require(mod .. 'hoverkeyboard')
 letters.IndeckKeyboard = require(mod .. 'indeckkeyboard')
 letters.LaptopKeyboard = require(mod .. 'laptopkeyboard')
 letters.keyboards = {
-  Hover= letters.HoverKeyboard, 
   Indeck= letters.IndeckKeyboard,
   Laptop= letters.LaptopKeyboard
 }
@@ -23,7 +21,7 @@ letters.root = letters.Node:new{}
 
 -- Set this from your code to make that kind of keyboard
 -- appear automatically when you focus a text field
-letters.defaultKeyboard = letters.HoverKeyboard
+letters.defaultKeyboard = letters.LaptopKeyboard
 
 -- The keyboard currently being displayed automatically.
 -- Don't touch this, it's private.
