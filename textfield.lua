@@ -72,6 +72,7 @@ function TextField:update()
 end
 
 function TextField:onKeyPressed(code, scancode, repeated)
+  --print("keypress", code, scancode, repeated)
   local newText = self.text
   -- lol this is hard-coding a US keyboard layout and shift key behavior... think we're gonna have to delegate to OS somehow
   if code == "backspace" then
@@ -93,6 +94,7 @@ function TextField:onKeyReleased(code, scancode)
 end
 
 function TextField:onTextInput(code, scancode)
+  --print("input", code, scancode)
   local newText = self.text .. code
 
   if newText ~= self.text and self.onChange(self, self.text, newText) then
