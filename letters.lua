@@ -4,6 +4,12 @@ letters = {}
 letters.Node = require(mod .. 'node')
 letters.HoverKeyboard = require(mod .. 'hoverkeyboard')
 letters.IndeckKeyboard = require(mod .. 'indeckkeyboard')
+letters.LaptopKeyboard = require(mod .. 'laptopkeyboard')
+letters.keyboards = {
+  Hover= letters.HoverKeyboard, 
+  Indeck= letters.IndeckKeyboard,
+  Laptop= letters.LaptopKeyboard
+}
 letters.Button = require(mod .. 'button')
 letters.TextField = require(mod .. 'textfield')
 letters.Hand = require(mod .. "hand")
