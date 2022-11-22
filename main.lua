@@ -14,7 +14,7 @@ function lovr.load()
   lovr.graphics.setBackgroundColor(0.95, 0.98, 0.98)
 
   local x = -0.3
-  for name, keeb in pairs(letters.keyboards) do
+  for name, keeb in pairs(letters.Keyboards) do
     keeb.button = letters.root:addChild(letters.Button:new{
       transform = lovr.math.newMat4():translate(x, 2.0, -2),
       onPressed = function() 
@@ -23,7 +23,7 @@ function lovr.load()
           letters.hideKeyboard()
           letters.displayKeyboard()
         end
-        for _, keeb2 in pairs(letters.keyboards) do
+        for _, keeb2 in pairs(letters.Keyboards) do
           if keeb2 ~= keeb then
             keeb2.button:setSelected(false)
           end
@@ -32,7 +32,7 @@ function lovr.load()
       label = name,
       size = lovr.math.newVec3(0.4, 0.2, 0.1),
       isToggle = true
-    })  
+    })
     x = x + 0.6
   end
   
@@ -48,7 +48,7 @@ function lovr.load()
     onReturn = function() foodField:makeKey(); return false; end,
     placeholder = "Name"
   })
-  letters.keyboards.Indeck.button:deselect()
+  letters.Keyboards.Tap.button:deselect()
   nameField:makeKey()
 
   for i, hand in ipairs(letters.hands) do

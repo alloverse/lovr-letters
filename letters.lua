@@ -2,11 +2,9 @@ local mod = (...):match("(.-)[^%.]+$")
 
 letters = {}
 letters.Node = require(mod .. 'node')
-letters.IndeckKeyboard = require(mod .. 'indeckkeyboard')
-letters.LaptopKeyboard = require(mod .. 'laptopkeyboard')
-letters.keyboards = {
-  Indeck= letters.IndeckKeyboard,
-  Laptop= letters.LaptopKeyboard
+letters.Keyboards = {
+  Tap = require(mod .. 'tap-keyboard'),
+  Indeck= require(mod .. 'indeck-keyboard')
 }
 letters.Button = require(mod .. 'button')
 letters.TextField = require(mod .. 'textfield')
@@ -21,7 +19,7 @@ letters.root = letters.Node:new{}
 
 -- Set this from your code to make that kind of keyboard
 -- appear automatically when you focus a text field
-letters.defaultKeyboard = letters.LaptopKeyboard
+letters.defaultKeyboard = letters.Keyboards.Tap
 
 -- The keyboard currently being displayed automatically.
 -- Don't touch this, it's private.
