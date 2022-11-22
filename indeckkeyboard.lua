@@ -149,7 +149,7 @@ local rows = {
     {'', type = 'spacer'},
     {'lctrl', label = 'ctrl', type = 'function', width = 3},
     {'lalt',  label = 'alt',  type = 'function', width = 1.5},
-    {'space', label = '    ', type = 'function', width = 5},
+    {'space', label = '    ', text = " ", type = 'function', width = 5},
     {'ralt',  label = 'alt',  type = 'function', width = 1.5},
     {'up',    label = '▲',    type = 'function', width = 2},
     {'rctrl', label = 'ctrl', type = 'function', width = 2},
@@ -215,8 +215,12 @@ function IndeckKeyboard:_createButtons()
               if key.type then
                 if key.type == 'function' then
                   lovr.event.push("keypressed", rawKey, -1, false)
-                end
-                if key.type == 'spacer' then
+                  if key.text then
+                    -- function key has associated textinput
+                    lovr.event.push("textinput", key.text, -1)
+                  end
+                elseif key.type == 'spacer' then
+                  -- ignored, not a real button
                 end
               else
                 -- special character
