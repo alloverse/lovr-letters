@@ -3,11 +3,18 @@ A [lovr.org](https://lovr.org) extension library that adds virtual keyboards for
 
 ## Available keyboards
 
-### `HoverKeyboard`
+### `TapKeyboard`
 
-A regular QWERTY keyboard that floats in front of the user.
+A regular QWERTY keyboard that floats in front of the user, where you can use a ray+trigger button
+to tap keys.
 
-![Image of a grid of buttons making up a QWERTY keyboard](images/hover.gif)
+![Image of a qwerty-style VR keyboard](images/hover.gif)
+
+### `IndeckKeyboard`
+
+A TapKeyboard subclass made for programming with InDeck.
+
+![Like the above, but with a lot of programmer specific buttons](images/indeck.png)
 
 ## Usage
 
@@ -23,7 +30,7 @@ needs it:
 local letters = require('letters')
 function lovr.load()
   letters.load()
-  letters.defaultKeyboard = letters.HoverKeyboard
+  letters.defaultKeyboard = letters.Keyboards.Tap
 end
 
 function lovr.update()
@@ -41,7 +48,7 @@ Use this to manage your keyboard manually:
 local letters = require('letters')
 function lovr.load()
   letters.load()
-  myKeyboard = letters.HoverKeyboard:new{world=letters.world}
+  myKeyboard = letters.Keyboards.Tap:new{world=letters.world}
 end
 
 function lovr.update()
