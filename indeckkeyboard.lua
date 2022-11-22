@@ -12,8 +12,6 @@ local IndeckKeyboard_mt = {
   __index = IndeckKeyboard
 }
 
-local s = 0.08
-local keysWide = 15
 local rows = {
   -- macros
   {
@@ -166,7 +164,9 @@ local rows = {
 
 function IndeckKeyboard:new(o)
   o = o or {}
-  o.size = lovr.math.newVec3(keysWide * s, s * #rows, 0.1)
+  o.keySize = 0.08
+  o.keysWide = 15
+  o.size = lovr.math.newVec3(o.keysWide * o.keySize, o.keySize * #rows, 0.1)
   o = letters.Node.new(self, o)
   setmetatable(o, IndeckKeyboard_mt)
   o.transform
@@ -177,19 +177,17 @@ function IndeckKeyboard:new(o)
 end
 
 function IndeckKeyboard:_createButtons()
-
-  
   for rowIndex, row in ipairs(rows) do
     local leftOffset = 0
     for keyIndex, key in ipairs(row) do
-      local size = lovr.math.newVec3(s, s, 0.05)
+      local size = lovr.math.newVec3(self.keySize,self.keySize, 0.05)
       local label = key
       local rawKey = key
       if type(key) == 'table' then
         label = key[1]
         rawKey = key[1]
         if key.width then
-          size:set(key.width * s, s, 0.05)
+          size:set(key.width * self.keySize, self.keySize, 0.05)
         end
         if key.label then 
           label = key.label
