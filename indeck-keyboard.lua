@@ -1,9 +1,8 @@
-local KeyboardConfig = require("keyboard-config")
-local TapKeyboard  = require("tap-keyboard")
+local mod = (...):match("(.-)[^%.]+$")
 
 local IndeckKeyboard = {
 }
-setmetatable(IndeckKeyboard, {__index=TapKeyboard})
+setmetatable(IndeckKeyboard, {__index=letters.TapKeyboard})
 local IndeckKeyboard_mt = {
   __index = IndeckKeyboard
 }
@@ -11,13 +10,13 @@ local IndeckKeyboard_mt = {
 function IndeckKeyboard:new(o)
   o = o or {}
   if not o.keyboardConfig then
-    o.keyboardConfig = KeyboardConfig:new()
+    o.keyboardConfig = letters.KeyboardConfig:new()
     o.keyboardConfig:addStandardKeys()
     o.keyboardConfig:addIndeckMacroRows()
     o.keyboardConfig:addLeftCommands()
     o.keyboardConfig:addRightCommands()
   end
-  o = TapKeyboard:new(o)
+  o = letters.TapKeyboard:new(o)
   setmetatable(o, IndeckKeyboard_mt)
   o.transform:translate(-1.0, 0, 0)
   return o
@@ -25,7 +24,7 @@ end
 
 
 -- An Indeck-specific macro pad
-function KeyboardConfig:addIndeckMacroRows()
+function letters.KeyboardConfig:addIndeckMacroRows()
   local macroRows = {
     {
       {'lovr.',     width = 2.5}, 
@@ -82,7 +81,7 @@ function KeyboardConfig:addIndeckMacroRows()
 end
 
 -- Add Indeck-specific commands as a sidebar
-function KeyboardConfig:addLeftCommands()
+function letters.KeyboardConfig:addLeftCommands()
   local commands = {
     {'load session', width = 4}, 
     {'save session', width = 4}, 
@@ -101,7 +100,7 @@ function KeyboardConfig:addLeftCommands()
 end
 
 -- Add Indeck-specific commands as a sidebar
-function KeyboardConfig:addRightCommands()
+function letters.KeyboardConfig:addRightCommands()
   local commands = {
     {'open file',  width = 4},
     {'save file',  width = 4},

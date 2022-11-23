@@ -1,5 +1,3 @@
-local KeyboardConfig = require("keyboard-config")
-
 local TapKeyboard = {
   caps= false,
   canBeGrabbed= true
@@ -12,7 +10,7 @@ local TapKeyboard_mt = {
 function TapKeyboard:new(o)
   o = o or {}
   if not o.keyboardConfig then
-    o.keyboardConfig = KeyboardConfig:new()
+    o.keyboardConfig = letters.KeyboardConfig:new()
     o.keyboardConfig:addStandardKeys()
   end
   if not o.keySize then

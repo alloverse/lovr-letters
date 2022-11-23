@@ -1,7 +1,8 @@
-local mod = (...):match("(.-)[^%.]+$") 
+local mod = (...):match("(.-)[^%.]+$")
 
 letters = {}
 letters.Node = require(mod .. 'node')
+letters.KeyboardConfig = require(mod .. "keyboard-config")
 letters.Keyboards = {
   Tap = require(mod .. 'tap-keyboard'),
   Indeck= require(mod .. 'indeck-keyboard')
