@@ -28,7 +28,7 @@ function TapKeyboard:new(o)
   o = letters.Node.new(self, o)
   setmetatable(o, TapKeyboard_mt)
   o.transform
-    :translate(-0.0, 1.5, -1.3)
+    :translate(-0.0, 1.1, -1.0)
     :rotate(-6.28/10, 1, 0, 0)
   o:_createButtons()
   return o
